@@ -1,0 +1,3 @@
+/home/jeff/Facultate/s2/OOP/learn_sfml/build/CMakeFiles/sfml_app.dir
+/home/jeff/Facultate/s2/OOP/learn_sfml/build/CMakeFiles/edit_cache.dir
+/home/jeff/Facultate/s2/OOP/learn_sfml/build/CMakeFiles/rebuild_cache.dir
