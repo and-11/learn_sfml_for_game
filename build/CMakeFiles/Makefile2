@@ -54,10 +54,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jeff/Facultate/s2/OOP/learn_sfml
+CMAKE_SOURCE_DIR = /home/jeff/Facultate/s2/OOP/learn_sfml_for_game
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jeff/Facultate/s2/OOP/learn_sfml/build
+CMAKE_BINARY_DIR = /home/jeff/Facultate/s2/OOP/learn_sfml_for_game/build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -81,14 +81,14 @@ clean: CMakeFiles/sfml_app.dir/clean
 CMakeFiles/sfml_app.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sfml_app.dir/build.make CMakeFiles/sfml_app.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sfml_app.dir/build.make CMakeFiles/sfml_app.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jeff/Facultate/s2/OOP/learn_sfml/build/CMakeFiles --progress-num=1,2 "Built target sfml_app"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jeff/Facultate/s2/OOP/learn_sfml_for_game/build/CMakeFiles --progress-num=1,2 "Built target sfml_app"
 .PHONY : CMakeFiles/sfml_app.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/sfml_app.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jeff/Facultate/s2/OOP/learn_sfml/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jeff/Facultate/s2/OOP/learn_sfml_for_game/build/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/sfml_app.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jeff/Facultate/s2/OOP/learn_sfml/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jeff/Facultate/s2/OOP/learn_sfml_for_game/build/CMakeFiles 0
 .PHONY : CMakeFiles/sfml_app.dir/rule
 
 # Convenience name for target.

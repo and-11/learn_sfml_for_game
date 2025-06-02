@@ -1,5 +1,5 @@
 CMakeFiles/sfml_app.dir/main.cpp.o: \
- /home/jeff/Facultate/s2/OOP/learn_sfml/main.cpp \
+ /home/jeff/Facultate/s2/OOP/learn_sfml_for_game/main.cpp \
  /usr/include/stdc-predef.h /usr/include/SFML/Graphics.hpp \
  /usr/include/SFML/Window.hpp /usr/include/SFML/System.hpp \
  /usr/include/SFML/Config.hpp /usr/include/SFML/System/Clock.hpp \

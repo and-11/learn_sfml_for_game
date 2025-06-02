@@ -1,4 +1,4 @@
-# Install script for directory: /home/jeff/Facultate/s2/OOP/learn_sfml
+# Install script for directory: /home/jeff/Facultate/s2/OOP/learn_sfml_for_game
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/jeff/Facultate/s2/OOP/learn_sfml/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/jeff/Facultate/s2/OOP/learn_sfml_for_game/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

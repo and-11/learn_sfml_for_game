@@ -1,9 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-// Function to display a button and return true if clicked
 bool displayButton(sf::RenderWindow& window, const sf::Vector2f& position, const std::string& text, sf::Font& font) {
-    static bool isHeld = false;
+    static std::map<std::string, bool> holdMap;
+    std::string key = std::to_string((int)position.x) + "_" + std::to_string((int)position.y);
+    bool& isHeld = holdMap[key];
 
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
     bool isHovered = false;
@@ -12,7 +13,7 @@ bool displayButton(sf::RenderWindow& window, const sf::Vector2f& position, const
     sf::RectangleShape button(sf::Vector2f(150.f, 50.f));
     button.setPosition(position);
 
-    if (button.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+    if (button.getGlobalBounds().contains((float)mousePos.x, (float)mousePos.y)) {
         isHovered = true;
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
@@ -33,10 +34,7 @@ bool displayButton(sf::RenderWindow& window, const sf::Vector2f& position, const
 
     sf::Text buttonText(text, font, 20);
     buttonText.setFillColor(sf::Color::White);
-    buttonText.setPosition(
-        position.x + 25,
-        position.y + 10
-    );
+    buttonText.setPosition(position.x + 25, position.y + 10);
 
     window.draw(button);
     window.draw(buttonText);
@@ -45,8 +43,12 @@ bool displayButton(sf::RenderWindow& window, const sf::Vector2f& position, const
 }
 
 
+
+
 bool displayImageButton(sf::RenderWindow& window, const sf::Vector2f& position, sf::Sprite& sprite) {
-    static bool isHeld = false;
+    static std::map<std::string, bool> holdMap;
+    std::string key = std::to_string((int)position.x) + "_" + std::to_string((int)position.y);
+    bool& isHeld = holdMap[key];
 
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
     bool isHovered = false;
@@ -74,10 +76,10 @@ bool displayImageButton(sf::RenderWindow& window, const sf::Vector2f& position, 
     else if (isHovered) button.setFillColor(sf::Color::Red);
     else button.setFillColor(sf::Color::Blue);
 
-    // Draw background
+    // Draw button background
     window.draw(button);
 
-    // Set sprite position and scale to fit the button
+    // Position and scale sprite to fit the button
     sprite.setPosition(position);
     sprite.setScale(
         button.getSize().x / sprite.getTexture()->getSize().x,
@@ -89,7 +91,6 @@ bool displayImageButton(sf::RenderWindow& window, const sf::Vector2f& position, 
 
     return isClicked;
 }
-
 
 
 
@@ -129,6 +130,15 @@ int main() {
 
         if (displayImageButton(window, sf::Vector2f(325.f, 250.f), sprite))
             std::cout << "Image button clicked!\n";
+
+        sf::Texture texture2;
+        if (!texture2.loadFromFile("button_icon.png"))
+            return -1;
+        sf::Sprite sprite2(texture2);
+
+        if (displayImageButton(window, sf::Vector2f(505.f, 250.f), sprite2))
+            std::cout << "Image button clicked!2222222\n";
+
 
         window.display();
     }
