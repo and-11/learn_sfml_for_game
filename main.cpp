@@ -1,21 +1,21 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <map>
 
-bool displayButton(sf::RenderWindow& window, const sf::Vector2f& position, const std::string& text, sf::Font& font) {
+// Custom-size text button
+bool displayButton(sf::RenderWindow& window, const sf::Vector2f& position, const sf::Vector2f& size, const std::string& text, sf::Font& font) {
     static std::map<std::string, bool> holdMap;
     std::string key = std::to_string((int)position.x) + "_" + std::to_string((int)position.y);
     bool& isHeld = holdMap[key];
 
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-    bool isHovered = false;
-    bool isClicked = false;
+    bool isHovered = false, isClicked = false;
 
-    sf::RectangleShape button(sf::Vector2f(150.f, 50.f));
+    sf::RectangleShape button(size);
     button.setPosition(position);
 
     if (button.getGlobalBounds().contains((float)mousePos.x, (float)mousePos.y)) {
         isHovered = true;
-
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             if (!isHeld) {
                 isClicked = true;
@@ -28,13 +28,11 @@ bool displayButton(sf::RenderWindow& window, const sf::Vector2f& position, const
         isHeld = false;
     }
 
-    if (isClicked) button.setFillColor(sf::Color::Green);
-    else if (isHovered) button.setFillColor(sf::Color::Red);
-    else button.setFillColor(sf::Color::Blue);
+    button.setFillColor(isClicked ? sf::Color::Green : (isHovered ? sf::Color::Red : sf::Color::Blue));
 
-    sf::Text buttonText(text, font, 20);
+    sf::Text buttonText(text, font, 16);
     buttonText.setFillColor(sf::Color::White);
-    buttonText.setPosition(position.x + 25, position.y + 10);
+    buttonText.setPosition(position.x + 5, position.y + 5);
 
     window.draw(button);
     window.draw(buttonText);
@@ -42,24 +40,20 @@ bool displayButton(sf::RenderWindow& window, const sf::Vector2f& position, const
     return isClicked;
 }
 
-
-
-
-bool displayImageButton(sf::RenderWindow& window, const sf::Vector2f& position, sf::Sprite& sprite) {
+// Custom-size image button
+bool displayImageButton(sf::RenderWindow& window, const sf::Vector2f& position, const sf::Vector2f& size, sf::Sprite& sprite) {
     static std::map<std::string, bool> holdMap;
     std::string key = std::to_string((int)position.x) + "_" + std::to_string((int)position.y);
     bool& isHeld = holdMap[key];
 
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-    bool isHovered = false;
-    bool isClicked = false;
+    bool isHovered = false, isClicked = false;
 
-    sf::RectangleShape button(sf::Vector2f(150.f, 50.f));
+    sf::RectangleShape button(size);
     button.setPosition(position);
 
-    if (button.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+    if (button.getGlobalBounds().contains((float)mousePos.x, (float)mousePos.y)) {
         isHovered = true;
-
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             if (!isHeld) {
                 isClicked = true;
@@ -72,36 +66,38 @@ bool displayImageButton(sf::RenderWindow& window, const sf::Vector2f& position, 
         isHeld = false;
     }
 
-    if (isClicked) button.setFillColor(sf::Color::Green);
-    else if (isHovered) button.setFillColor(sf::Color::Red);
-    else button.setFillColor(sf::Color::Blue);
-
-    // Draw button background
+    button.setFillColor(isClicked ? sf::Color::Green : (isHovered ? sf::Color::Red : sf::Color::Blue));
     window.draw(button);
 
-    // Position and scale sprite to fit the button
     sprite.setPosition(position);
     sprite.setScale(
-        button.getSize().x / sprite.getTexture()->getSize().x,
-        button.getSize().y / sprite.getTexture()->getSize().y
+        size.x / sprite.getTexture()->getSize().x,
+        size.y / sprite.getTexture()->getSize().y
     );
-
-    // Draw image on top
     window.draw(sprite);
 
     return isClicked;
 }
 
-
-
-
 int main() {
-    std::cout <<" cacaca";
-    sf::RenderWindow window(sf::VideoMode(1200, 900), "SFML Multiple Buttons");
+    sf::RenderWindow window(sf::VideoMode(1200, 900), "THE GAMMME");
 
     sf::Font font;
-    if (!font.loadFromFile("arial.ttf"))
+    if (!font.loadFromFile("arial.ttf")) {
+        std::cerr << "Failed to load font\n";
         return -1;
+    }
+
+    sf::Texture texture;
+    if (!texture.loadFromFile("button_icon.png")) {
+        std::cerr << "Failed to load button_icon.png\n";
+        return -1;
+    }
+
+    sf::Sprite sprite(texture);
+    sf::Sprite sprite2(texture);
+
+    bool menuVisible = false;
 
     while (window.isOpen()) {
         sf::Event event;
@@ -110,35 +106,41 @@ int main() {
                 window.close();
         }
 
-        window.clear();
+        window.clear(sf::Color(30, 30, 30));
 
-        // Draw 3 buttons
-        if (displayButton(window, sf::Vector2f(325.f, 150.f), "Button 1", font))
+        // Sizable text buttons
+        if (displayButton(window, sf::Vector2f(325.f, 150.f), sf::Vector2f(200.f, 60.f), "Button 1", font))
             std::cout << "Button 1 clicked!\n";
 
-        if (displayButton(window, sf::Vector2f(600.f, 250.f), "Button 2", font))
+        if (displayButton(window, sf::Vector2f(600.f, 250.f), sf::Vector2f(180.f, 50.f), "Button 2", font))
             std::cout << "Button 2 clicked!\n";
 
-        if (displayButton(window, sf::Vector2f(400.f, 350.f), "Button 3", font))
+        if (displayButton(window, sf::Vector2f(400.f, 350.f), sf::Vector2f(220.f, 70.f), "Button 3", font))
             std::cout << "Button 3 clicked!\n";
 
-        
-        sf::Texture texture;
-        if (!texture.loadFromFile("button_icon.png"))
-            return -1;
-        sf::Sprite sprite(texture);
+        // Sizable image buttons
+        if (displayImageButton(window, sf::Vector2f(325.f, 250.f), sf::Vector2f(150.f, 50.f), sprite))
+            std::cout << "Image button 1 clicked!\n";
 
-        if (displayImageButton(window, sf::Vector2f(325.f, 250.f), sprite))
-            std::cout << "Image button clicked!\n";
+        if (displayImageButton(window, sf::Vector2f(505.f, 250.f), sf::Vector2f(120.f, 40.f), sprite2))
+            std::cout << "Image button 2 clicked!\n";
 
-        sf::Texture texture2;
-        if (!texture2.loadFromFile("button_icon.png"))
-            return -1;
-        sf::Sprite sprite2(texture2);
+        // Menu toggle button
+        if (displayButton(window, sf::Vector2f(20.f, 20.f), sf::Vector2f(80.f, 30.f), "Menu", font))
+            menuVisible = !menuVisible;
 
-        if (displayImageButton(window, sf::Vector2f(505.f, 250.f), sprite2))
-            std::cout << "Image button clicked!2222222\n";
+        // Menu options
+        if (menuVisible) {
+            if (displayButton(window, sf::Vector2f(20.f, 60.f), sf::Vector2f(120.f, 30.f), "Option 1", font)) {
+                std::cout << "Option 1 selected\n";
+                menuVisible = false;
+            }
 
+            if (displayButton(window, sf::Vector2f(20.f, 100.f), sf::Vector2f(120.f, 30.f), "Option 2", font)) {
+                std::cout << "Option 2 selected\n";
+                menuVisible = false;
+            }
+        }
 
         window.display();
     }
